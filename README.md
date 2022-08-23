@@ -31,9 +31,6 @@ React 입문 주차 개인 과제 를 react-router-dom, styled-components, redux
     - `이전으로` 버튼: 버튼을 클릭하면 리스트 화면으로 되돌아 갑니다.
     
 - **제한사항**
-    - map을 사용할 때 **반드시 key**을 넣어야 하며, `map` 의 **index를 사용을 금지**합니다. 이것을 금지하는 이유는 강의에 다루었습니다.
-    - Todo Id 생성 시 `todos.length` 사용해서 생성하지 않습니다. `todos.length` 을 사용해서 id 생성 시 **발생할 수 있는 문제점에 대해 고민**해보시길 바랍니다.
-
-
-
+    - map을 사용할 때 **반드시 key**을 넣어야 하며, `map` 의 **index를 사용을 금지**합니다.
+    - Todo Id 생성 시 `todos.length` 사용해서 생성하지 않습니다. 
 
