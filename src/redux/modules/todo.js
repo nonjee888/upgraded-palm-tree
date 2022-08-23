@@ -1,89 +1,99 @@
-// todo.js
-
-const initialState =
-
-    [
-        {                                     /////////뭔가를: 넣어야하는데 
-            id: 1,
-            title: "react를 배워봅시다.",
-            body: "함수형 컴포넌트는?",
-            isDone: false
-        },
-        {
-            id: 2,
-            title: "react를 배워봅시다.",
-            body: "클래스형 컴포넌트는?",
-            isDone: true
-
-        },
-        {
-            id: 3,
-            title: "44를 배워봅시다.",
-            body: "44 컴포넌트는?",
-            isDone: false
-
-        }]
-
 // Actions
 
-const LOAD = 'todo/LOAD';
-const CREATE = 'todo/CREATE';
-const UPDATE = 'todo/UPDATE';
-const REMOVE = 'todo/REMOVE';
+const CREATE_TODOS = 'CREATE_TODOS';
+const UPDATE_TODOS = 'UPDATE_TODOS';
+const REMOVE_TODOS = 'REMOVE_TODOS';
+const TODOS_ID = 'TODOS_ID';
+
+// Action Creator
+export const create_todos = (payload) => {
+    return {
+      type: CREATE_TODOS,
+      payload: payload,
+    };
+  };
+        
+export const update_todos = (payload) => {
+    return {
+      type: UPDATE_TODOS,
+      payload: payload,
+    };
+};
+
+export const remove_todos = (payload) => {
+    return {
+        type: REMOVE_TODOS,
+        payload: payload,
+    };
+};
+
+export const todos_id = (payload) => {
+    return {
+        type: TODOS_ID,
+        payload: payload,
+    };
+};
+
+// initial state
+const initialState = {
+todos:[{                                    
+        id: "1",
+        title: "react를 배워봅시다.",
+        body: "함수형 컴포넌트는?",
+        isDone: false,
+      },
+    ],
+todo:{
+        id: "0",
+        title: "",
+        body:"",
+        isDone: false,
+}
+};
 
 // Reducer
-
-export default function reducer(state = initialState, action = {}) {  
-    
+const todos = (state = initialState, action) => {
     switch (action.type) {
+        case CREATE_TODOS: 
+            return {
+                ...state,
+                todos: [...state.todos, action.payload], 
+            };    
+      
+    
+    
+        case REMOVE_TODOS: 
+            return {
+                ...state,
+                todos: state.todos.filter((todo) => todo.id !== action.payload),}
+            
         
-        case "todo/CREATE": {
-            const new_todo = [state.todo, action.todo];
-            console.log(new_todo)
-            return { Object:{} };  //////////리턴에 뭐가들어가야해
-             
-        }
 
-        case "todo/LOAD": {
-            const old_todo = [...state.todo, action.todo];   
-            return state;
-        }
+        case UPDATE_TODOS: 
+            return {
+                ...state,
+                todos: state.todos.map((todo) => {
+                    if (todo.id === action.payload) {
+                        return {
+                        ...todo,
+                        isDone: !todo.isDone,
+                        };
+                    } else {
+                        return todo;
+                    }                
+                }),
+                };
 
-        case "todo/UPDATE": {
-            const update_todo = state.map(
-                todo =>
+        case TODOS_ID:
+            return {
+                ...state,
+                todo: state.todos.find((todo)=> {                
+                    return todo.id == action.payload;  ////////////////
+                     }),
+                         };  
+   default:
+    return state;  
+  }
+};
 
-                    todo.id === action.id // id 가 일치하면
-                        ? { ...todo, done: !todo.done } // done 값을 반전시키고
-                        : todo // 아니라면 그대로 둠
-            );
-        }
-
-        case "todo/REMOVE": {
-            const remove_todo = state.filter(
-                todo => todo.id !== action.id
-            );
-        }
-
-        default:
-            return state;
-    }
-}
-
-// Action Creators
-export function creatTodo(todo) {
-    return { type: CREATE, todo: todo };     //key: value
-}
-
-export function loadTodo(todo) {    
-    return { type: LOAD, todo: todo };
-}
-
-export function updateTodo(todo) {  
-    return { type: UPDATE, todo: todo };
-}
-
-export function removeTodo(todo) {  
-    return { type: REMOVE, todo: todo };
-}
-
+export default todos;
